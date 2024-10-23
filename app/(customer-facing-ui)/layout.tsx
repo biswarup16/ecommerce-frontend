@@ -8,7 +8,9 @@ export default function AdminLayout({
   }) {
     return <section>
       <Navbar />
+      <main className="my-10">
       {children}
+      </main>
       <Footer />
       </section>
   }

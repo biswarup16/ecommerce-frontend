@@ -1,10 +1,12 @@
+import SideBar from "@/components/admin/sidebar/SideBar"
+
 export default function AdminLayout({
     children,
   }: {
     children: React.ReactNode
   }) {
     return <section>
-      Sidebar
+      <SideBar />
       {children}
       </section>
   }

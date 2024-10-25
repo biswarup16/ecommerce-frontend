@@ -1,11 +1,22 @@
+"use client";
 import Link from "next/link";
-import React from "react";
-
+import React, { useState } from "react";
+import { FiShoppingCart } from "react-icons/fi";
+import CartSidebar from "../cart-sidebar/CartSidebar";
 function Navbar() {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+
+  function onOpenSideBar() {
+    setIsSideBarOpen(!isSideBarOpen);
+  }
+  function handleCloseSidebar() {
+    setIsSideBarOpen(false);
+  }
+
   return (
     <>
       {/* <!-- ========== HEADER ========== --> */}
-      <header className="sticky top-4 inset-x-0 before:absolute before:inset-0 before:max-w-[66rem] before:mx-2 before:lg:mx-auto before:rounded-[26px] before:border before:border-gray-200 dark:border-neutral-700 after:absolute after:inset-0 after:-z-[1] after:max-w-[66rem] after:mx-2 after:lg:mx-auto after:rounded-[26px] after:bg-white dark:bg-neutral-900 flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full">
+      <header className="sticky top-4 inset-x-0 before:absolute before:inset-0 before:max-w-[66rem] before:mx-2 before:lg:mx-auto before:rounded-[26px] before:border before:border-gray-200 dark:border-neutral-700 after:absolute after:inset-0 after:-z-[1] after:max-w-[66rem] after:mx-2 after:lg:mx-auto after:rounded-[26px] after:bg-white dark:bg-neutral-900 flex flex-wrap md:justify-start md:flex-nowrap z-30 w-full">
         <nav className="relative max-w-[66rem] w-full md:flex md:items-center md:justify-between md:gap-3 ps-5 pe-2 mx-2 lg:mx-auto py-2">
           {/* <!-- Logo w/ Collapse Button --> */}
           <div className="flex items-center justify-between">
@@ -322,6 +333,14 @@ function Navbar() {
                     Log in
                   </a>
                 </div>
+                <div className="relative flex flex-wrap items-center gap-x-1.5 md:ps-2.5  md:ms-1.5 before:block before:absolute before:top-1/2 before:-start-px before:w-px before:h-4 before:bg-gray-300 before:-translate-y-1/2 dark:before:bg-neutral-700">
+                  <a
+                    className="p-2 w-full flex items-center text-sm text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
+                    href="#"
+                  >
+                    <FiShoppingCart onClick={onOpenSideBar} />
+                  </a>
+                </div>
                 {/* <!-- End Button Group --> */}
               </div>
             </div>
@@ -330,6 +349,25 @@ function Navbar() {
         </nav>
       </header>
       {/* <!-- ========== END HEADER ========== --> */}
+
+      {/* Sidebar and backdrop */}
+      {isSideBarOpen && (
+        <>
+          {/* Background overlay with blur */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm "
+            onClick={handleCloseSidebar}
+          />
+
+          <div
+            className={`fixed right-0 top-0 z-30 h-full max-w-[400px] w-full bg-white shadow-lg transform transition-transform duration-1000 ease-[cubic-bezier(0.25, 1, 0.5, 1)] ${
+              isSideBarOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            <CartSidebar onClose={handleCloseSidebar} />
+          </div>
+        </>
+      )}
     </>
   );
 }

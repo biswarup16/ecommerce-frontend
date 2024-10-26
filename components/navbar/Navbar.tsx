@@ -337,8 +337,9 @@ function Navbar() {
                   <a
                     className="p-2 w-full flex items-center text-sm text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
                     href="#"
+                    onClick={onOpenSideBar}
                   >
-                    <FiShoppingCart onClick={onOpenSideBar} />
+                    <FiShoppingCart />
                   </a>
                 </div>
                 {/* <!-- End Button Group --> */}

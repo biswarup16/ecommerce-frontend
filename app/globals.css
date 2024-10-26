@@ -19,6 +19,13 @@ body {
   scrollbar-width: none; /* for Firefox */
 }
 
+/* Custom doted border */
+
+.custom-dotted-border {
+  border-image: repeating-linear-gradient(to right, gray 0, black 1px, transparent 2px) 1;
+}
+
+
 
 @layer base {
   :root {

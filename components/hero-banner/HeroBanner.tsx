@@ -18,15 +18,15 @@ function HeroBanner({ className }: any) {
       </div>
 
       {/* Text content on top of the image */}
-      <div className="relative z-2 h-full flex pl-16">
+      <div className="relative z-2 h-full flex pl-6 md:pl-16">
         <div className="flex flex-col items-start justify-center">
-          <h1 className="text-xl md:text-4xl font-bold text-white">
+          <h1 className="text-xl md:text-4xl lg:text-5xl font-bold text-white">
             Puma One8
           </h1>
-          <p className="text-lg md:text-xl text-white mt-2 uppercase">
+          <p className="text-xs sm:text-md md:text-xl lg:text-2xl text-white mt-2 uppercase">
             Your Subtitle Here
           </p>
-          <Button className="mt-4 px-8 " />
+          <Button className="mt-4 !px-1 !py-1 md:!px-8 md:!py-3 bg-white !text-black  text-xs sm:text-sm hover:!bg-gray-200" />
         </div>
       </div>
     </main>

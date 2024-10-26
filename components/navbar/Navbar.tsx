@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import CartSidebar from "../cart-sidebar/CartSidebar";
 function Navbar() {
-  const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
   function onOpenSideBar() {
     setIsSideBarOpen(!isSideBarOpen);
@@ -351,24 +351,30 @@ function Navbar() {
       {/* <!-- ========== END HEADER ========== --> */}
 
       {/* Sidebar and backdrop */}
-      {isSideBarOpen && (
-        <>
-          {/* Background overlay with blur */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm "
-            onClick={handleCloseSidebar}
-          />
+      {/* {isSideBarOpen && (
+        <> */}
+      {/* Background overlay with blur */}
 
+      {/* Background overlay */}
+      {/* Cart Sidebar */}
+      <div className="relative z-30">
+        {isSideBarOpen && (
           <div
-            className={`fixed right-0 top-0 z-30 h-full max-w-[400px] w-full bg-white shadow-lg transform transition-transform duration-1000 ease-[cubic-bezier(0.25, 1, 0.5, 1)] ${
-              isSideBarOpen ? "translate-x-0" : "translate-x-full"
-            }`}
-          >
-            <CartSidebar onClose={handleCloseSidebar} />
-          </div>
-        </>
-      )}
+            className="fixed inset-0 bg-black bg-opacity-10 backdrop-blur-sm"
+            onClick={handleCloseSidebar} // Allows closing the sidebar by clicking outside
+          />
+        )}
+        <div
+          className={`fixed right-0 top-0 h-full max-w-[500px] w-full bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+            isSideBarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <CartSidebar onClose={handleCloseSidebar} />
+        </div>
+      </div>
     </>
+    //   )}
+    // </>
   );
 }
 

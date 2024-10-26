@@ -31,7 +31,10 @@ function CartProductItem() {
           <span className="text-green-400 text-sm">In Stock</span>
         </div>
         <div className="flex space-x-1 p-[2px] rounded">
-          <select title="color" className="border rounded-md text-xs ">
+          <select
+            title="color"
+            className="border rounded-md text-xs pl-[1.5px]"
+          >
             <option>Red</option>
             <option>Blue</option>
             <option>Green</option>

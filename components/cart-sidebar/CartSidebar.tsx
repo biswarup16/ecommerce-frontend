@@ -3,7 +3,7 @@ import CartProductItem from "../cart-product/CartProductItem";
 
 function CartSidebar({ onClose }: any) {
   return (
-    <main className="fixed right-0 top-0 max-w-[500px] h-full bg-white shadow-lg z-50 transform transition-transform duration-500 ease-out translate-x-0">
+    <main className="h-full bg-white shadow-lg z-50">
       <div className="p-4 flex justify-between items-center border-b border-gray-300 mx-4">
         <h2 className="text-xl font-bold">Cart</h2>
         <button onClick={onClose} className="text-black text-2xl font-semibold">
@@ -12,9 +12,9 @@ function CartSidebar({ onClose }: any) {
       </div>
 
       {/* Content of the sidebar */}
-      <div className="flex flex-col h-[90%] mx-4">
+      <div className="flex flex-col h-[90%] mx-4 mt-2">
         {/* Product List */}
-        <div className="overflow-y-scroll scrollbar-hide flex flex-col gap-5 h-[60%]">
+        <div className="overflow-y-scroll scrollbar-hide flex flex-col gap-2 h-[60%]">
           <CartProductItem />
           <CartProductItem />
           <CartProductItem />

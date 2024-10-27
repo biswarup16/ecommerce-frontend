@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import ImageModal from "../ImageModal";
 // import ImageModal from "./ImageModal"; // Assuming ImageModal is in the same directory
@@ -20,9 +20,35 @@ const images: ImageType[] = [
   { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
 ];
 
-function ImageGallery() {
+const images2: ImageType[] = [
+  { src: "/Product-details-list/p1.avif", alt: "Product Image 1" },
+  { src: "/Product-details-list/p4.avif", alt: "Product Image 4" },
+  { src: "/Product-details-list/p2.avif", alt: "Product Image 2" },
+  { src: "/Product-details-list/p5.avif", alt: "Product Image 5" },
+  { src: "/Product-details-list/p6.avif", alt: "Product Image 6" },
+  { src: "/Product-details-list/p3.avif", alt: "Product Image 3" },
+  { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
+  { src: "/Product-details-list/p8.avif", alt: "Product Image 7" },
+];
+
+interface ImageProps {
+  src: string;
+  alt: string;
+  id: number;
+}
+
+interface ImageGalleryProps {
+  imageListProps?: ImageProps[];
+}
+
+function ImageGallery({imageListProps = []}:ImageGalleryProps) {
   const [toggleImageModal, setToggleImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
+  const [imageList, setImageList] = useState<ImageProps[]>()
+
+  useEffect(()=>{
+    setImageList(imageListProps)
+  },[imageListProps])
 
   function openImageModal(image: ImageType) {
     setSelectedImage(image);
@@ -37,7 +63,7 @@ function ImageGallery() {
   return (
     <>
       <section className="grid col-span-1 flex-1 gap-2 sm:grid sm:grid-cols-2 sm:gap-3 overflow-auto scrollbar-hide h-[400px] lg:h-[99vh] sm:h-[500px] ">
-        {images.map((image, index) => (
+        {imageList?.map((image, index) => (
           <div key={index} className="relative w-full h-[450px] sm:h-[500px]">
             <Image
               src={image.src}

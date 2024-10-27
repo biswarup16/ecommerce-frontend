@@ -1,18 +1,71 @@
 "use client";
-import React from "react";
+import React,{useState, useEffect} from "react";
 import ImageGallery from "./image-gallery/ImageGallery";
 import ProductColor from "./product-color/ProductColor";
 import ProductSize from "./product-sizes/ProductSize";
 import AddtoCart from "./add-to-cart/AddToCart";
 import Button from "../button/Button";
 
+interface ProductDetailsProps{
+
+}
+
 function ProductDetails() {
+  const [productImageList, setProductImageList] = useState<any>([])
+  useEffect(() => {
+    setProductImageList(imagesList)
+  }, [])
+  
+  type ImageType = {
+    src: string;
+    alt: string;
+  };
+  const images = [
+    {
+      src: "/Product-details-list/p1.avif",
+      alt: "Product Color 1",
+      id: 1,
+    },
+    { src: "/products-image/product1.avif", alt: "Product Color 2", id: 2 },
+  ];
+  const imagesList: ImageType[] = [
+    { src: "/Product-details-list/p1.avif", alt: "Product Image 1" },
+    { src: "/Product-details-list/p2.avif", alt: "Product Image 2" },
+    { src: "/Product-details-list/p3.avif", alt: "Product Image 3" },
+    { src: "/Product-details-list/p4.avif", alt: "Product Image 4" },
+    { src: "/Product-details-list/p5.avif", alt: "Product Image 5" },
+    { src: "/Product-details-list/p6.avif", alt: "Product Image 6" },
+    { src: "/Product-details-list/p8.avif", alt: "Product Image 7" },
+    { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
+  ];
+  
+  const imagesList2: ImageType[] = [
+    { src: "/Product-details-list/p8.avif", alt: "Product Image 7" },
+    { src: "/Product-details-list/p4.avif", alt: "Product Image 4" },
+    { src: "/Product-details-list/p1.avif", alt: "Product Image 1" },
+    { src: "/Product-details-list/p2.avif", alt: "Product Image 2" },
+    { src: "/Product-details-list/p5.avif", alt: "Product Image 5" },
+    { src: "/Product-details-list/p6.avif", alt: "Product Image 6" },
+    { src: "/Product-details-list/p3.avif", alt: "Product Image 3" },
+    { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
+  ];
+
+  function handleimageColorChange(id:number){
+    console.log("My Number", id)
+    if(id==1){
+      setProductImageList(imagesList)
+    }
+    if(id==2){
+      setProductImageList(imagesList2)
+    }
+  }
+
   return (
     <main className="container mx-auto flex flex-col lg:grid lg:grid-cols-3 h-screen p-4 w-full">
       {/* Left Section - Image Gallery */}
 
       <div className="lg:col-span-2">
-        <ImageGallery />
+        <ImageGallery imageListProps={productImageList} />
       </div>
 
       {/* Right Section - Product Details */}
@@ -39,7 +92,11 @@ function ProductDetails() {
           {/* Color Image */}
 
           <div>
-            <ProductColor />
+            <ProductColor 
+              activeImageProps={1}
+             imageListProps={images} 
+             handleimageColorChangeCallback={handleimageColorChange}
+             />
           </div>
         </div>
 

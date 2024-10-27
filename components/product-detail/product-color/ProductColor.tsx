@@ -3,37 +3,42 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-function ProductColor() {
-  const [activeImage, setActiveImage] = useState<number | null>(null);
+interface ImageProps {
+  src: string;
+  alt: string;
+  id: number;
+}
 
-  const handleClick = (index: number) => {
-    setActiveImage(index);
+interface ProductColorProps {
+  activeImageProps?: number;
+  imageListProps?: ImageProps[];
+  handleimageColorChangeCallback: (id: number) => void;
+}
+
+function ProductColor({ activeImageProps, imageListProps = [], handleimageColorChangeCallback }: ProductColorProps) {
+  const [activeImage, setActiveImage] = useState<number | null>(activeImageProps ?? null);
+  const [imageList, setImageList] = useState<ImageProps[]>(imageListProps);
+
+  const handleClick = (id: number) => {
+    setActiveImage(id);
+    handleimageColorChangeCallback(id)
   };
-
-  const images = [
-    {
-      src: "/Product-details-list/p1.avif",
-      alt: "Product Color 1",
-    },
-    { src: "/products-image/product1.avif", alt: "Product Color 2" },
-  ];
 
   return (
     <section className="flex space-x-3">
-      {images.map((image, index) => (
+      {imageList.map((image) => (
         <div
-          key={index}
+          key={image.id}
           className={`relative h-[50px] w-[40px] border px-7 cursor-pointer ${
-            activeImage === index ? "border-black" : "border-transparent"
+            activeImage === image.id ? "border-black" : "border-transparent"
           }`}
-          onClick={() => handleClick(index)}
+          onClick={() => handleClick(image.id)}
         >
           <Image
             src={image.src}
             alt={image.alt}
             layout="fill"
             objectFit="cover"
-            className=""
           />
         </div>
       ))}

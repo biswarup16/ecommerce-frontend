@@ -10,14 +10,11 @@ import React from "react";
 function page() {
   return (
     <>
-      {/* <Herosection /> */}
+      <Herosection />
       {/* <ProductCard /> */}
-      {/* <div className="grid grid-cols-4 gap-5 padding container mx-auto mt-20 ">
+      <div className="grid grid-cols-4 gap-5 padding container mx-auto mt-20 ">
         <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-        <CategoryCard />
-      </div> */}
+      </div>
       {/* <div className="mt-20">
         <HeroBanner />
       </div> */}

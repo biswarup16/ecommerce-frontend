@@ -23,26 +23,37 @@ const imageSrc = [
 
 function CategoryCard({ className }: any) {
   return (
-    <>
-      {imageSrc.map((srcImage, i) => (
-        <main key={i} className={`w-[350px] inset-0 mx-auto ${className}`}>
-          <div className="ImageContainer">
-            <Image
-              src={srcImage.src}
-              alt={`category-card ${i + 1}`}
-              width={380}
-              height={600}
-            />
-          </div>
-          <div className="font-semibold uppercase max-w-full mt-4 text-center  text-2xl leading-[1.1666] ">
-            {srcImage.category}
-          </div>
-          <div className="w-full text-center mt-2">
-            <Button className="px-8" />
-          </div>
-        </main>
-      ))}
-    </>
+    <div
+      className={`w-[93vw] lg:w-[94vw] mx-auto h-[500px] md:h-[600px]   ${className} ${
+        className
+          ? ""
+          : "flex flex-wrap md:grid md:grid-cols-2 lg:flex lg:flex-wrap gap-4 mx-auto"
+      }`}
+    >
+      <div className="flex md:flex-none overflow-x-auto xl:overflow-hidden scrollbar-hide w-[94vw] h-full gap-4 md:gap-5">
+        {imageSrc.map((srcImage, i) => (
+          <main
+            key={i}
+            className="flex-shrink-0 w-[90vw] md:w-[45vw] lg:w-[350px] h-[400px] md:h-[450px] lg:h-[580px] lg:my-auto mx-auto"
+          >
+            <div className="relative w-[90vw] md:w-[46vw] lg:w-[350px] h-[400px] md:h-[450px] lg:h-[450px]">
+              <Image
+                src={srcImage.src}
+                alt={`category-card ${i + 1}`}
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+            <div className="font-semibold uppercase mt-2 text-center text-2xl leading-[1.1666]">
+              {srcImage.category}
+            </div>
+            <div className="w-full text-center mt-2 pb-2">
+              <Button className="px-8" />
+            </div>
+          </main>
+        ))}
+      </div>
+    </div>
   );
 }
 

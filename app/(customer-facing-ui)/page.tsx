@@ -12,20 +12,19 @@ function page() {
     <>
       <Herosection />
       {/* <ProductCard /> */}
-      <div className="grid grid-cols-4 gap-5 padding container mx-auto mt-20 ">
+      <div className="mt-20 ">
         <CategoryCard />
       </div>
-      {/* <div className="mt-20">
+      <div className="mt-14 md:mt-20">
         <HeroBanner />
-      </div> */}
-      {/* <div className="grid grid-cols-3 gap-5 px-5 container mx-auto mt-20">
-        <PictureWithTextCard />
-        <PictureWithTextCard />
-        <PictureWithTextCard />
-      </div> */}
-      {/* <div className="mt-20">
+      </div>
+      <div className="mt-20">
         <StripToCallAction />
-      </div> */}
+      </div>
+      <div className="mt-20">
+        <PictureWithTextCard />
+      </div>
+
       {/* <div className="mt-20">
         <DisplayCard />
       </div> */}

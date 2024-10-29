@@ -15,13 +15,19 @@ interface ProductColorProps {
   handleimageColorChangeCallback: (id: number) => void;
 }
 
-function ProductColor({ activeImageProps, imageListProps = [], handleimageColorChangeCallback }: ProductColorProps) {
-  const [activeImage, setActiveImage] = useState<number | null>(activeImageProps ?? null);
+function ProductColor({
+  activeImageProps,
+  imageListProps = [],
+  handleimageColorChangeCallback,
+}: ProductColorProps) {
+  const [activeImage, setActiveImage] = useState<number | null>(
+    activeImageProps ?? null
+  );
   const [imageList, setImageList] = useState<ImageProps[]>(imageListProps);
 
   const handleClick = (id: number) => {
     setActiveImage(id);
-    handleimageColorChangeCallback(id)
+    handleimageColorChangeCallback(id);
   };
 
   return (

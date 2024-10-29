@@ -4,7 +4,9 @@ import Button from "../button/Button";
 
 function HeroBanner({ className }: any) {
   return (
-    <main className={`relative h-[570px] mx-[1px] min-w-screen ${className}`}>
+    <main
+      className={`relative h-[150px] sm:h-[280px] lg:h-[570px] lg:w-[100vw] mx-[1px] w-[100vw] ${className}`}
+    >
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -13,7 +15,7 @@ function HeroBanner({ className }: any) {
           fill
           quality={100}
           priority={true}
-          className="object-contain"
+          objectFit="cover"
         />
       </div>
 

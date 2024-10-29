@@ -6,10 +6,16 @@ import { HiMinus } from "react-icons/hi2";
 import { IoMdHeart } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
 
-function CartProductItem() {
+function CartProductItem({ extraClass }: any) {
   const [quantity, setQuantity] = useState(0);
   return (
-    <div className="grid grid-cols-[120px_1fr_1fr] gap-1 border-b py-6 px-1  h-[200px]">
+    <div
+      className={`${extraClass} ${
+        extraClass
+          ? ""
+          : "grid grid-cols-[120px_1fr_1fr] gap-1 border-b py-6 px-1  h-[200px]"
+      } `}
+    >
       {/* Product Image with fixed width */}
       <div className="w-full h-full relative flex justify-center items-center">
         <Image
@@ -31,10 +37,7 @@ function CartProductItem() {
           <span className="text-green-400 text-sm">In Stock</span>
         </div>
         <div className="flex space-x-1 p-[2px] rounded">
-          <select
-            title="color"
-            className="border rounded-md text-xs pl-[1.5px]"
-          >
+          <select title="color" className="border rounded-md text-xs pl-[4px]">
             <option>Red</option>
             <option>Blue</option>
             <option>Green</option>

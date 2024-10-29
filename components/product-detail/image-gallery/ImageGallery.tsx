@@ -1,35 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import ImageModal from "../ImageModal";
-// import ImageModal from "./ImageModal"; // Assuming ImageModal is in the same directory
+import ImageModal from "../image-modal/ImageModal";
 
 // Define a type for the image structure
 type ImageType = {
+  id: number;
   src: string;
   alt: string;
 };
-
-const images: ImageType[] = [
-  { src: "/Product-details-list/p1.avif", alt: "Product Image 1" },
-  { src: "/Product-details-list/p2.avif", alt: "Product Image 2" },
-  { src: "/Product-details-list/p3.avif", alt: "Product Image 3" },
-  { src: "/Product-details-list/p4.avif", alt: "Product Image 4" },
-  { src: "/Product-details-list/p5.avif", alt: "Product Image 5" },
-  { src: "/Product-details-list/p6.avif", alt: "Product Image 6" },
-  { src: "/Product-details-list/p8.avif", alt: "Product Image 7" },
-  { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
-];
-
-const images2: ImageType[] = [
-  { src: "/Product-details-list/p1.avif", alt: "Product Image 1" },
-  { src: "/Product-details-list/p4.avif", alt: "Product Image 4" },
-  { src: "/Product-details-list/p2.avif", alt: "Product Image 2" },
-  { src: "/Product-details-list/p5.avif", alt: "Product Image 5" },
-  { src: "/Product-details-list/p6.avif", alt: "Product Image 6" },
-  { src: "/Product-details-list/p3.avif", alt: "Product Image 3" },
-  { src: "/Product-details-list/p9.avif", alt: "Product Image 8" },
-  { src: "/Product-details-list/p8.avif", alt: "Product Image 7" },
-];
 
 interface ImageProps {
   src: string;
@@ -38,17 +16,17 @@ interface ImageProps {
 }
 
 interface ImageGalleryProps {
-  imageListProps?: ImageProps[];
+  productImageListProps?: ImageProps[];
 }
 
-function ImageGallery({imageListProps = []}:ImageGalleryProps) {
+function ImageGallery({ productImageListProps = [] }: ImageGalleryProps) {
   const [toggleImageModal, setToggleImageModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
-  const [imageList, setImageList] = useState<ImageProps[]>()
+  const [imageList, setImageList] = useState<ImageProps[]>();
 
-  useEffect(()=>{
-    setImageList(imageListProps)
-  },[imageListProps])
+  useEffect(() => {
+    setImageList(productImageListProps);
+  }, [productImageListProps]);
 
   function openImageModal(image: ImageType) {
     setSelectedImage(image);
@@ -62,7 +40,7 @@ function ImageGallery({imageListProps = []}:ImageGalleryProps) {
 
   return (
     <>
-      <section className="grid col-span-1 flex-1 gap-2 sm:grid sm:grid-cols-2 sm:gap-3 overflow-auto scrollbar-hide h-[400px] lg:h-[99vh] sm:h-[500px] ">
+      <section className="grid col-span-1 flex-1 gap-2 sm:grid sm:grid-cols-2 sm:gap-3 overflow-auto scrollbar-hide h-[400px] lg:h-[99vh] sm:h-[500px] cursor-pointer">
         {imageList?.map((image, index) => (
           <div key={index} className="relative w-full h-[450px] sm:h-[500px]">
             <Image
@@ -70,8 +48,8 @@ function ImageGallery({imageListProps = []}:ImageGalleryProps) {
               alt={image.alt}
               layout="fill"
               quality={100}
+              objectFit="cover"
               onClick={() => openImageModal(image)}
-              className="cursor-pointer object-fill sm:object-cover"
             />
           </div>
         ))}
@@ -82,10 +60,13 @@ function ImageGallery({imageListProps = []}:ImageGalleryProps) {
           className="fixed inset-0 grid place-content-center bg-black bg-opacity-50 z-40 border-black border-2"
           onClick={closeImageModal}
         >
-          <div className="">
+          <div
+            onClick={(e) => e.stopPropagation()} // Prevents modal close when clicking inside
+          >
             <ImageModal
               closeImageModal={closeImageModal}
               selectedImage={selectedImage}
+              imageListData={imageList}
             />
           </div>
         </div>

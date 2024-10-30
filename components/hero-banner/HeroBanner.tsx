@@ -5,7 +5,7 @@ import Button from "../button/Button";
 function HeroBanner({ className }: any) {
   return (
     <main
-      className={`relative h-[150px] sm:h-[280px] lg:h-[570px] lg:w-[100vw] mx-[1px] w-[100vw] ${className}`}
+      className={`relative h-[150px] sm:h-[280px] lg:h-[570px] lg:w-full lg:mx-auto mx-[1px] w-[100vw] ${className}`}
     >
       {/* Background Image */}
       <div className="absolute inset-0">

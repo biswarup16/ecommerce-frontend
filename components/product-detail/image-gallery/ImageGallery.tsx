@@ -47,7 +47,6 @@ function ImageGallery({ productImageListProps = [] }: ImageGalleryProps) {
               src={image.src}
               alt={image.alt}
               layout="fill"
-              quality={100}
               objectFit="cover"
               onClick={() => openImageModal(image)}
             />

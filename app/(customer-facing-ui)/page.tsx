@@ -7,29 +7,26 @@ import ProductCard from "@/components/product-card/ProductCard";
 import StripToCallAction from "@/components/strip-to-call-action/StripToCallAction";
 import React from "react";
 
-function page() {
+function Page() {
   return (
     <>
-      <Herosection />
-      {/* <ProductCard /> */}
-      <div className="mt-20 ">
+      <section id="herosection">
+        <Herosection />
+      </section>
+      <section id="category" className="mt-20">
         <CategoryCard />
-      </div>
-      <div className="mt-14 md:mt-20">
-        <HeroBanner />
-      </div>
-      <div className="mt-20">
+      </section>
+      <section id="stripToCallAction" className="mt-20">
         <StripToCallAction />
-      </div>
-      <div className="mt-20">
+      </section>
+      <section id="heroBanner" className="mt-14 md:mt-20">
+        <HeroBanner />
+      </section>
+      <section id="pictureWithText" className="mt-20">
         <PictureWithTextCard />
-      </div>
-
-      {/* <div className="mt-20">
-        <DisplayCard />
-      </div> */}
+      </section>
     </>
   );
 }
 
-export default page;
+export default Page;

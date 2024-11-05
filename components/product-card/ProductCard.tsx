@@ -32,7 +32,7 @@ function ProductCard({ product, className }: any) {
         {/* Product name and details */}
         <div className="flex flex-col items-start ">
           <span className="text-black font-semibold text-sm md:text-lg lg:text-2xl ">
-            {product.name}
+            Product Name
           </span>
           <p className="text-gray-600 text-[8px] md:text-xs lg:text-[14px]">
             A brief description of the product goes here.

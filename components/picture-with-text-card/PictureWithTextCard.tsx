@@ -28,6 +28,9 @@ const imageSrc = [
 function PictureWithTextCard({ className }: any) {
   return (
     <div className="w-[95vw] mx-auto">
+      <p className="text-xl md:text-3xl font-bold capitalize mb-2 ">
+        Trending Fashion
+      </p>
       <div className="flex gap-2 md:gap-3 overflow-x-scroll  h-[300px] md:h-[400px] lg:h-[500px] lg:overflow-hidden ">
         {imageSrc.map((image, i) => (
           <div
@@ -42,6 +45,7 @@ function PictureWithTextCard({ className }: any) {
                 src={image.src}
                 layout="fill"
                 objectFit="cover"
+                priority
               />
             </div>
 

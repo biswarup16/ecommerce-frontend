@@ -42,6 +42,7 @@ function CategoryCard({ className }: any) {
                 alt={`category-card ${i + 1}`}
                 layout="fill"
                 objectFit="cover"
+                priority
               />
             </div>
             <div className="font-semibold uppercase mt-2 text-center text-2xl leading-[1.1666]">

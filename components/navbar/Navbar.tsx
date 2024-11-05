@@ -50,9 +50,9 @@ function Navbar() {
             </Link>
             <Link
               className="text-white hover:text-gray-400 transition-colors"
-              href="/sale"
+              href="#pictureWithText"
             >
-              Sale
+              Trends
             </Link>
             <Link
               className="text-white hover:text-gray-400 transition-colors"

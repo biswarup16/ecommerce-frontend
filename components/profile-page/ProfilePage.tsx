@@ -5,7 +5,6 @@ import {
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
-  FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
 

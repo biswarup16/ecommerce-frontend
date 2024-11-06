@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import { StarIcon } from "lucide-react";
 
 interface VariantProps {
-  id: number;
-  pid: number;
+  variant_id: number;
   color: string;
   images: string[];
   stock: number;
@@ -14,7 +13,7 @@ interface VariantProps {
 }
 
 interface ProductProps {
-  id: number;
+  product_id: number;
   product_name: string;
   product_description: string;
   product_brand: string;
@@ -44,17 +43,44 @@ function ProductCard({
   };
 
   // Handle Add to Cart, ensuring unique pids
-  const handleAddToCart = (pid: number) => {
-    setAddToCartProductArray((prev) => [...prev, pid]);
+  const handleAddToCart = (product:any) => {
+    // setAddToCartProductArray((prev) => [...prev, pid]);
+    // console.log("MY PRODUCT", product, selectedVariant)
+
+    const productData = {
+      product_id:product.product_id,
+      product_name:product.product_name,
+      product_category:product.category,
+      variant_id:selectedVariant.variant_id,
+      variant_price:selectedVariant.price
+    }
+
+    console.log("MY CART ITEM", productData)
+
+    const cartData = localStorage.getItem("cartData")
+    console.log("MY CART DATA", cartData, cartData?.length)
+
+    
+    if (cartData) {
+      const parsedCartData = JSON.parse(cartData);
+      parsedCartData.push(productData);
+      localStorage.setItem("cartData", JSON.stringify(parsedCartData));
+      console.log("Added to existing cart:", parsedCartData);
+    }
+    else{
+      localStorage.setItem("cartData",JSON.stringify([productData]))
+      console.log("NOO")
+    }
+
   };
 
-  useEffect(() => {
-    console.log("Array of Product IDs:", addToCartProductArray);
-    localStorage.setItem(
-      "ProductsArray",
-      JSON.stringify(addToCartProductArray)
-    );
-  }, [addToCartProductArray]);
+  // useEffect(() => {
+  //   console.log("Array of Product IDs:", addToCartProductArray);
+  //   localStorage.setItem(
+  //     "ProductsArray",
+  //     JSON.stringify(addToCartProductArray)
+  //   );
+  // }, [addToCartProductArray]);
 
   return (
     <div
@@ -130,7 +156,7 @@ function ProductCard({
 
         <div className="w-full text-center mt-2">
           <button
-            onClick={() => handleAddToCart(selectedVariant.pid)}
+            onClick={() => handleAddToCart(product)}
             type="button"
             className="md:py-2 lg:py-3 lg:px-2 text-xs rounded p-[5px] text-white bg-black w-[70%]"
           >

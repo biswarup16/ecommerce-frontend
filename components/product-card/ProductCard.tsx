@@ -1,6 +1,7 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StarIcon } from "lucide-react";
+import { useCart } from "../context-provider/ContextProvider";
 
 interface VariantProps {
   variant_id: number;
@@ -31,56 +32,32 @@ function ProductCard({
 }) {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
 
-  // Track the cart with unique pids
-  const [addToCartProductArray, setAddToCartProductArray] = useState<number[]>(
-    []
-  );
-
   // Handle color change
   const handleColorChange = (color: string) => {
     const variantColor = product.variants.find((v) => v.color === color);
     if (variantColor) setSelectedVariant(variantColor);
   };
 
-  // Handle Add to Cart, ensuring unique pids
-  const handleAddToCart = (product:any) => {
-    // setAddToCartProductArray((prev) => [...prev, pid]);
-    // console.log("MY PRODUCT", product, selectedVariant)
+  // Handle Add to Cart function
+  const { addToCart } = useCart(); // Access context values
 
+  const handleAddToCart = (product: any) => {
     const productData = {
-      product_id:product.product_id,
-      product_name:product.product_name,
-      product_category:product.category,
-      variant_id:selectedVariant.variant_id,
-      variant_price:selectedVariant.price
-    }
+      product_id: product.product_id,
+      product_name: product.product_name,
+      product_brand: product.product_brand,
+      product_category: product.category,
+      variant_id: selectedVariant.variant_id,
+      variant_price: selectedVariant.price,
+      variant_stock: selectedVariant.stock,
+      variant_color: selectedVariant.color,
+      variant_sizes: selectedVariant.sizes,
+      variant_image: selectedVariant.images,
+    };
 
-    console.log("MY CART ITEM", productData)
-
-    const cartData = localStorage.getItem("cartData")
-    console.log("MY CART DATA", cartData, cartData?.length)
-
-    
-    if (cartData) {
-      const parsedCartData = JSON.parse(cartData);
-      parsedCartData.push(productData);
-      localStorage.setItem("cartData", JSON.stringify(parsedCartData));
-      console.log("Added to existing cart:", parsedCartData);
-    }
-    else{
-      localStorage.setItem("cartData",JSON.stringify([productData]))
-      console.log("NOO")
-    }
-
+    // Add product to context cart and open sidebar
+    addToCart(productData);
   };
-
-  // useEffect(() => {
-  //   console.log("Array of Product IDs:", addToCartProductArray);
-  //   localStorage.setItem(
-  //     "ProductsArray",
-  //     JSON.stringify(addToCartProductArray)
-  //   );
-  // }, [addToCartProductArray]);
 
   return (
     <div
@@ -158,7 +135,7 @@ function ProductCard({
           <button
             onClick={() => handleAddToCart(product)}
             type="button"
-            className="md:py-2 lg:py-3 lg:px-2 text-xs rounded p-[5px] text-white bg-black w-[70%]"
+            className="md:py-2 lg:py-3 lg:px-2 text-xs rounded p-[5px] text-white bg-black w-full"
           >
             Add To Cart
           </button>

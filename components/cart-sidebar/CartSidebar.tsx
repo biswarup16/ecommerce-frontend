@@ -2,43 +2,11 @@ import React, { useState } from "react";
 import CartProductItem from "../cart-product/CartProductItem";
 import Button from "../button/Button";
 import { useCart } from "../context-provider/ContextProvider";
-
+import { useRouter } from "next/navigation";
 function CartSidebar({ onClose }: any) {
-  const { cartItems } = useCart();
+  const router = useRouter();
+  const { totalValue, subtotal } = useCart();
   const [promocode, setPromocode] = useState<string>("");
-
-  console.log("My Cart Data", cartItems);
-
-  // Subtotal for all the cart items
-  const Subtotal = () => {
-    const subTotal = cartItems.reduce((total, item) => {
-      return total + item.variant_price;
-    }, 0);
-    return Math.round(subTotal);
-  };
-
-  // Discount PromoCode logic
-  const applyDiscount = (subtotal: number) => {
-    if (promocode === "WELCOME20") {
-      return subtotal * 0.2; // Apply 20% discount if promo code matches
-    }
-    return 0; // No discount
-  };
-
-  // Total Bill Amount
-  const calculateTotal = () => {
-    const subtotal = Subtotal();
-    const discount = applyDiscount(subtotal);
-    const taxPercentage = 0.3;
-
-    // Sub Calculation
-    const tax = subtotal * taxPercentage;
-
-    const total = Math.round((subtotal - discount + tax) * 100) / 100;
-    return total;
-  };
-
-  console.log("Total Bill", calculateTotal());
 
   return (
     <main className="h-full bg-white shadow-lg z-50">
@@ -98,7 +66,7 @@ function CartSidebar({ onClose }: any) {
             >
               <span className="text-md font-semibold">Subtotal</span>
               <span id="subtotal" className="text-sm font-semibold">
-                ₹{Subtotal()}
+                ₹{subtotal}
               </span>
             </div>
 
@@ -128,7 +96,7 @@ function CartSidebar({ onClose }: any) {
             >
               <span className="text-md font-black">Total</span>
               <span id="total" className="text-md font-semibold">
-                ₹{calculateTotal()}
+                ₹{totalValue}
               </span>
             </div>
           </div>
@@ -136,6 +104,7 @@ function CartSidebar({ onClose }: any) {
           <Button
             className="w-full rounded-sm hover:bg-black/70"
             text="Check out"
+            onClick={() => router.push("/checkout")}
           />
         </div>
       </div>

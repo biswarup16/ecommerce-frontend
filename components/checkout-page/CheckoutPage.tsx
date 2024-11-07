@@ -1,12 +1,27 @@
+"use client";
 import React from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import CartProductItem from "../cart-product/CartProductItem";
-
+import { useCart } from "../context-provider/ContextProvider";
 function CheckoutPage() {
+  const { totalValue } = useCart();
+
+  // Shipping cost
+  function shipingCost() {
+    return totalValue < 500 ? 50 : 0;
+  }
+
+  // Billing adding shipping cost
+  function grandTotal() {
+    const ShippingValue = shipingCost();
+    const GrandTotal = Math.round(ShippingValue + totalValue);
+    return GrandTotal;
+  }
+
   return (
-    <main className="flex flex-col lg:flex-row w-full mx-4 lg:mx-0 py-4 px-4 gap-8 lg:gap-12">
+    <main className="container flex flex-col lg:flex-row w-full mx-4 lg:mx-0 px-4 gap-8 lg:gap-12">
       {/* Customer Details Section */}
       <section className="flex-1 lg:pr-6 border-b lg:border-b-0 lg:border-r border-gray-300 pb-6 lg:pb-0">
         <div className="px-6 lg:px-10 py-3">
@@ -157,50 +172,38 @@ function CheckoutPage() {
 
       {/* Cart Details Section */}
       <section className="flex-1 p-4 lg:pl-6 bg-white">
-        <h2 className="text-2xl lg:text-3xl font-bold uppercase mb-4">
+        <h2 className="text-2xl lg:text-3xl font-bold uppercase mb-4 pb-4 border-b">
           Cart Details
         </h2>
 
         {/* Product Cart Items */}
-        <div className="max-h-[400px] mx-auto overflow-y-auto space-y-4 scrollbar-hide">
+        <div className="max-h-[500px] overflow-y-auto scrollbar-hide -mt-4 ">
           <CartProductItem />
-          <CartProductItem />
-          <CartProductItem />
-          <CartProductItem />
-
-          {/* Additional CartProductItems will be scrollable */}
         </div>
 
-        {/* Promo Code and Subtotal Section */}
-        <div className="mt-6 border-t border-gray-300 pt-4">
-          <h3 className="uppercase text-sm font-semibold my-4 max-w-full mx-auto">
-            Apply Promo Code
-          </h3>
-          <div className="flex space-x-2 my-6 items-center">
-            <input
-              type="text"
-              placeholder="Enter Promo Code"
-              className="flex-grow p-4 border border-black rounded"
-            />
-            <Button className="py-7 px-8 font-semibold rounded">Apply</Button>
-          </div>
-          {/* Divider Line */}
-          <div className="mt-8 border-t  border-gray-300 my-6" />
+        {/* Subtotal Section */}
+        <div className="border-t border-gray-300 ">
+          <div className=" my-6" />
 
           <div className="flex justify-between text-sm text-gray-700 uppercase">
             <span>Subtotal</span>
-            <span>$100.00</span>
+            <span>₹{totalValue}</span>
           </div>
-          <div className="flex justify-between text-sm text-gray-700 uppercase mt-2">
-            <span>Shipping Cost</span>
-            <span>$10.00</span>
+          <div className="flex justify-between text-sm text-gray-700  mt-2">
+            <div className="flex flex-col">
+              <span className="uppercase">Shipping Cost</span>
+              <span className="text-xs text-red-500 ">
+                Shippin free on order more than ₹500
+              </span>
+            </div>
+            <span>{shipingCost() ? "₹50" : ""}</span>
           </div>
 
           <div className="border-t border-gray-300 my-4" />
 
           <div className="flex justify-between font-bold text-xl">
             <span>Grand Total</span>
-            <span>$110.00</span>
+            <span>₹{grandTotal()}</span>
           </div>
         </div>
       </section>

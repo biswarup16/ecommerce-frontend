@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import { HiPlus, HiMinus } from "react-icons/hi2";
-import { IoMdHeart } from "react-icons/io";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useCart } from "../context-provider/ContextProvider";
 
@@ -12,6 +11,17 @@ function CartProductItem({ extraClass }: any) {
   function hanldeDeleteCartItem(cartIndex: any) {
     const updatedCartData = cartItems.filter((_, index) => index !== cartIndex);
     // Update cart state and localStorage
+    setCartItems(updatedCartData);
+    localStorage.setItem("cartData", JSON.stringify(updatedCartData));
+  }
+
+  // Update Cart Quantity
+
+  function handleCartQuanity(cartIndex: number, newQuantity: number) {
+    const updatedCartData = cartItems.map((item, index) =>
+      index === cartIndex ? { ...item, product_quantity: newQuantity } : item
+    );
+
     setCartItems(updatedCartData);
     localStorage.setItem("cartData", JSON.stringify(updatedCartData));
   }
@@ -66,30 +76,36 @@ function CartProductItem({ extraClass }: any) {
                 ))}
               </select>
               {/* Quantity Controls */}
-              {/* <div className="flex items-center px-[2px] space-x-2 border rounded-sm">
+              <div className="flex items-center px-[2px] space-x-2 border rounded-sm">
                 <button
                   type="button"
-                  onClick={() =>
-                    setQuantity(item.quantity === 0 ? 0 : item.quantity - 1)
-                  }
                   className=""
+                  onClick={() =>
+                    item.product_quantity > 1
+                      ? handleCartQuanity(index, item.product_quantity - 1)
+                      : hanldeDeleteCartItem(index)
+                  }
                 >
                   <HiMinus />
                 </button>
-                <span className="text-sm">{item.quantity}</span>
+                <span className="text-sm">{item.product_quantity}</span>
                 <button
-                  onClick={() => setQuantity(item.quantity + 1)}
                   className="text-md"
+                  onClick={() =>
+                    handleCartQuanity(index, item.product_quantity + 1)
+                  }
                 >
                   <HiPlus />
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
 
           {/* Price and Actions */}
           <div className="flex flex-col justify-between items-end ml-5 my-auto space-y-16">
-            <span>₹{item.variant_price}</span>
+            <span>
+              ₹{Math.round(item.variant_price * item.product_quantity)}
+            </span>
             <div className="flex items-center space-x-2">
               <div
                 className="flex items-center space-x-1 text-gray-500 cursor-pointer text-sm"

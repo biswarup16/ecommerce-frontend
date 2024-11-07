@@ -53,6 +53,7 @@ function ProductCard({
       variant_color: selectedVariant.color,
       variant_sizes: selectedVariant.sizes,
       variant_image: selectedVariant.images,
+      product_quantity: 1,
     };
 
     // Add product to context cart and open sidebar

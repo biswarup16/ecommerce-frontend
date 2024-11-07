@@ -7,7 +7,6 @@ import {
   useEffect,
 } from "react";
 
-// Define interface for context values
 interface StateContextType {
   openCartToggle: boolean;
   setOpenCartToggle: (value: boolean) => void;
@@ -15,9 +14,10 @@ interface StateContextType {
   cartItems: any[];
   setCartItems: (value: any[]) => void;
   addToCart: (cartData: any) => void;
+  subtotal: number;
+  totalValue: number;
 }
 
-// Create context with a better-typed default value
 const StateContext = createContext<StateContextType>({
   openCartToggle: false,
   setOpenCartToggle: () => {},
@@ -25,19 +25,19 @@ const StateContext = createContext<StateContextType>({
   cartItems: [],
   setCartItems: () => {},
   addToCart: () => {},
+  subtotal: 0,
+  totalValue: 0,
 });
 
-// Provider Component
 export const StateProvider = ({ children }: { children: ReactNode }) => {
   const [openCartToggle, setOpenCartToggle] = useState<boolean>(false);
   const [cartItems, setCartItems] = useState<any>([]);
+  const [promocode, setPromocode] = useState("");
 
-  // To Toggle SideBar for Product Cart
   const toggleCart = () => {
     setOpenCartToggle((prev) => !prev);
   };
 
-  // Load cart data from localStorage on mount
   useEffect(() => {
     const storedCartData = localStorage.getItem("cartData");
     if (storedCartData) {
@@ -45,15 +45,37 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-  // To send the ProductData to Product Cart
   const addToCart = (product: any) => {
     setCartItems((prevCart: any) => {
       const updatedCart = [...prevCart, product];
       localStorage.setItem("cartData", JSON.stringify(updatedCart));
       return updatedCart;
     });
-    return toggleCart();
+    toggleCart();
   };
+
+  // Calculate subtotal
+  const calculateSubtotal = () => {
+    return Math.round(
+      cartItems.reduce(
+        (total: any, item: any) =>
+          total + item.variant_price * item.product_quantity,
+        0
+      )
+    );
+  };
+
+  const subtotal = calculateSubtotal();
+
+  // Calculate total with discount and tax
+  const calculateTotal = () => {
+    const discount = promocode === "WELCOME20" ? subtotal * 0.2 : 0;
+    const discountedSubtotal = subtotal - discount;
+    const tax = discountedSubtotal * 0.3;
+    return Math.round(discountedSubtotal + tax);
+  };
+
+  const totalValue = calculateTotal();
 
   return (
     <StateContext.Provider
@@ -64,6 +86,8 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
         cartItems,
         setCartItems,
         addToCart,
+        subtotal,
+        totalValue,
       }}
     >
       {children}

@@ -3,11 +3,12 @@ import React from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 import CartProductItem from "../cart-product/CartProductItem";
 import { useCart } from "../context-provider/ContextProvider";
 function CheckoutPage() {
-  const { totalValue } = useCart();
-
+  const { totalValue, isAuthenticated, promptSignIn } = useCart();
+  const router = useRouter();
   // Shipping cost
   function shipingCost() {
     return totalValue < 500 ? 50 : 0;
@@ -20,6 +21,15 @@ function CheckoutPage() {
     return GrandTotal;
   }
 
+  // Checking if user is signin or not
+  function handlecheckout() {
+    if (!isAuthenticated) {
+      promptSignIn();
+    } else {
+      console.log("Checkout Done");
+    }
+  }
+
   return (
     <main className="container flex flex-col lg:flex-row w-full mx-4 lg:mx-0 px-4 gap-8 lg:gap-12">
       {/* Customer Details Section */}
@@ -30,15 +40,22 @@ function CheckoutPage() {
           </h2>
 
           {/* Signing Option */}
-          <div className="flex flex-col w-full lg:w-[70%] space-y-3 mb-8">
-            <span className="capitalize font-semibold">
-              For a faster checkout experience
-            </span>
-            <Button className="uppercase py-6 !rounded-none">Sign in</Button>
-          </div>
+          {!isAuthenticated && (
+            <div className="flex flex-col w-full lg:w-[70%] space-y-3 mb-8">
+              <span className="capitalize font-semibold">
+                For a faster checkout experience
+              </span>
 
+              <Button
+                onClick={() => router.push("/login")}
+                className="uppercase py-6 !rounded-none"
+              >
+                Sign in
+              </Button>
+            </div>
+          )}
           {/* Shipping Form */}
-          <form className="space-y-6">
+          <form className="space-y-6 ">
             {/* First Name and Last Name Fields */}
             <div className="flex flex-col lg:flex-row w-full gap-4">
               <div className="flex flex-col space-y-1.5 w-full">
@@ -163,9 +180,16 @@ function CheckoutPage() {
               />
             </div>
 
-            <Button className="text-center mx-auto py-6 w-[60%] lg:w-[50%] uppercase font-semibold mt-8">
-              Proceed to Payment
-            </Button>
+            {isAuthenticated && (
+              <div className="grid place-content-center">
+                <Button
+                  className="px-20 py-7 rounded-none uppercase font-semibold"
+                  onClick={handlecheckout}
+                >
+                  Proceed to Payment
+                </Button>
+              </div>
+            )}
           </form>
         </div>
       </section>

@@ -16,7 +16,6 @@ function CartProductItem({ extraClass }: any) {
   }
 
   // Update Cart Quantity
-
   function handleCartQuanity(cartIndex: number, newQuantity: number) {
     const updatedCartData = cartItems.map((item, index) =>
       index === cartIndex ? { ...item, product_quantity: newQuantity } : item
@@ -69,11 +68,14 @@ function CartProductItem({ extraClass }: any) {
               />
               {/* Size Selection */}
               <select title="size" className="border p-1 rounded text-xs">
-                {item.variant_sizes?.map((size: string, index: number) => (
-                  <option key={index} value={size}>
-                    {size}
-                  </option>
-                ))}
+                <option value={item.selectedSize}>{item.selectedSize}</option>
+                {item.variant_sizes
+                  .filter((size: string) => size !== item.selectedSize) // Filter out selected size
+                  .map((size: string, index: number) => (
+                    <option key={index} value={size}>
+                      {size}
+                    </option>
+                  ))}
               </select>
               {/* Quantity Controls */}
               <div className="flex items-center px-[2px] space-x-2 border rounded-sm">

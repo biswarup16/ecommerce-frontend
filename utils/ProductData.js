@@ -19,8 +19,8 @@ export const ProductData = [
         ],
         stock: 50,
         sizes: ["UK6", "UK7", "UK8"],
-        price: 22.99,
-        sale_price: 26.99,
+        price: 2600.99,
+        sale_price: 3000.99,
       },
       {
         variant_id: 2,
@@ -66,19 +66,19 @@ export const ProductData = [
 
         color: "Blue",
         images: [
+          "/Product-details-list/p7.avif",
+          "/Product-details-list/p6.avif",
           "/Product-details-list/p3.avif",
           "/Product-details-list/p1.avif",
-          "/Product-details-list/p7.avif",
           "/Product-details-list/p4.avif",
-          "/Product-details-list/p6.avif",
           "/Product-details-list/p8.avif",
           "/Product-details-list/p5.avif",
           "/Product-details-list/p2.avif",
         ],
         stock: 50,
         sizes: ["XS", "S", "M", "L", "XL"],
-        price: 22.99,
-        sale_price: 26.99,
+        price: 1499,
+        sale_price: 2000,
       },
       {
         variant_id: 2,
@@ -86,9 +86,9 @@ export const ProductData = [
 
         color: "Black",
         images: [
+          "/Product-details-list/p1.avif",
           "/Product-details-list/p7.avif",
           "/Product-details-list/p3.avif",
-          "/Product-details-list/p1.avif",
           "/Product-details-list/p4.avif",
           "/Product-details-list/p6.avif",
           "/Product-details-list/p8.avif",
@@ -147,8 +147,8 @@ export const ProductData = [
         ],
         stock: 50,
         sizes: ["UK6", "UK7", "UK8"],
-        price: 22.99,
-        sale_price: 26.99,
+        price: 3999.99,
+        sale_price: 6999.99,
       },
       {
         variant_id: 2,
@@ -173,6 +173,76 @@ export const ProductData = [
       {
         variant_id: 3,
         product_id: 3,
+
+        color: "Red",
+        images: [
+          "/Product-details-list/p3.avif",
+          "/Product-details-list/p1.avif",
+          "/Product-details-list/p7.avif",
+          "/Product-details-list/p4.avif",
+          "/Product-details-list/p6.avif",
+          "/Product-details-list/p8.avif",
+          "/Product-details-list/p5.avif",
+          "/Product-details-list/p2.avif",
+        ],
+        stock: 30,
+        sizes: ["UK6", "UK8", "UK9"],
+        price: 25.99,
+        sale_price: 28.99,
+      },
+    ],
+  },
+  {
+    product_id: 4,
+    product_name: "Casual Sneakers",
+    product_description: "Lightweight sneakers perfect for casual outings.",
+    product_brand: "BrandD",
+    category: "Kids",
+    sub_category: "Footwear",
+    variants: [
+      {
+        variant_id: 1,
+        product_id: 4,
+
+        color: "Blue",
+        images: [
+          "/Product-details-list/p3.avif",
+          "/Product-details-list/p5.avif",
+          "/Product-details-list/p6.avif",
+          "/Product-details-list/p7.avif",
+          "/Product-details-list/p1.avif",
+          "/Product-details-list/p4.avif",
+          "/Product-details-list/p8.avif",
+          "/Product-details-list/p2.avif",
+        ],
+        stock: 50,
+        sizes: ["UK6", "UK7", "UK8"],
+        price: 999.99,
+        sale_price: 1126.99,
+      },
+      {
+        variant_id: 2,
+        product_id: 4,
+
+        color: "Black",
+        images: [
+          "/Product-details-list/p3.avif",
+          "/Product-details-list/p1.avif",
+          "/Product-details-list/p7.avif",
+          "/Product-details-list/p4.avif",
+          "/Product-details-list/p6.avif",
+          "/Product-details-list/p8.avif",
+          "/Product-details-list/p5.avif",
+          "/Product-details-list/p2.avif",
+        ],
+        stock: 70,
+        sizes: ["UK7", "UK8", "UK9", "UK10"],
+        price: 24.99,
+        sale_price: 27.99,
+      },
+      {
+        variant_id: 3,
+        product_id: 4,
 
         color: "Red",
         images: [

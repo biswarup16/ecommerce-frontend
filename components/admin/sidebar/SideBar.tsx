@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import Dashboard from "../dashboard/Dashboard";
 import Order from "../orders/Order";
 import Reviews from "../reviews/Reviews";
-import AddNewProduct from "@/components/add-new-product/AddNewProduct";
+import AddNewProduct from "@/components/admin/add-new-product/AddNewProduct";
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);

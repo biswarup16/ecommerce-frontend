@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 type ImageType = {
   id: number;
@@ -9,9 +9,9 @@ type ImageType = {
 };
 
 interface ImageProps {
-  imageListData?: ImageType[];
+  imageListData?: Omit<ImageType, "id">[]; // Image data without IDs
   closeImageModal?: () => void;
-  selectedImage?: ImageType;
+  selectedImage?: Omit<ImageType, "id">; // Selected image data without an ID
 }
 
 function ImageModal({
@@ -19,12 +19,46 @@ function ImageModal({
   selectedImage,
   imageListData = [],
 }: ImageProps) {
-  const [imageList] = useState<ImageType[]>(imageListData);
-  const [currentImage, setCurrentImage] = useState<ImageType | undefined>(
-    selectedImage
-  );
+  // Generate IDs for images
+  const [imageList, setImageList] = useState<ImageType[]>([]);
+  const [currentImage, setCurrentImage] = useState<ImageType | undefined>();
+
+  // useEffect(() => {
+  //   // Add sequential IDs to imageListData images
+  //   const imagesWithIds = imageListData.map((image, index) => ({
+  //     ...image,
+  //     id: index,
+  //   }));
+  //   setImageList(imagesWithIds);
+
+  //   // Set the selected image with ID if it's passed as a prop
+  //   if (selectedImage) {
+  //     const initialImage = imagesWithIds.find(
+  //       (img) => img.src === selectedImage.src
+  //     );
+  //     setCurrentImage(initialImage);
+  //   }
+  // }, [imageListData, selectedImage]);
 
   // Mini Photos
+
+  useEffect(() => {
+    // Create id for imagelist
+    const imageWithId = imageListData.map((image, index) => ({
+      ...image,
+      id: index,
+    }));
+    setImageList(imageWithId);
+
+    // Check whether selected image and currentimage is same
+    if (selectedImage) {
+      const initialImageForModal = imageWithId.find(
+        (img) => img.src === selectedImage.src
+      );
+      setCurrentImage(initialImageForModal);
+    }
+  }, [selectedImage, imageListData]);
+
   function handleClick(id: number) {
     const newSelectedImage = imageList.find((image) => image.id === id);
     setCurrentImage(newSelectedImage);
@@ -49,12 +83,12 @@ function ImageModal({
         </div>
       )}
       {/* Mini Photos */}
-      <div className="absolute bottom-2 w-full flex gap-2 justify-center lg:bottom-5 lg:flex lg:gap-4 lg:items-center lg:justify-center lg:px-5 ">
+      <div className="absolute bottom-2 w-full flex gap-2 justify-center lg:bottom-5 lg:flex lg:gap-4 lg:items-center lg:justify-center lg:px-5">
         {imageList.map((photo) => (
           <div
             key={photo.id}
-            className={`relative h-[50px] w-[40px]  cursor-pointer ${
-              currentImage?.id == photo.id ? "border-[1px] border-black" : ""
+            className={`relative h-[50px] w-[40px] cursor-pointer ${
+              currentImage?.id === photo.id ? "border-[1px] border-black" : ""
             }`}
             onClick={() => handleClick(photo.id)}
           >

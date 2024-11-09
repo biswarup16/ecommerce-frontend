@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import Button from "../button/Button";
+import Link from "next/link";
 
 // Array with images and content
 const BannerSections = [
@@ -46,7 +47,12 @@ function HeroBanner({ className }: { className?: string }) {
               <p className="text-xs sm:text-md md:text-xl lg:text-2xl mt-2 uppercase">
                 {section.subtitle}
               </p>
-              <Button className="mt-4 !px-1 !py-1 md:!px-8 md:!py-3 bg-white !text-black text-xs sm:text-sm hover:!bg-gray-200" />
+              <Link
+                href={"/products"}
+                className="bg-white py-3 px-8 mt-5 hover:bg-gray-300 text-black  uppercase font-semibold"
+              >
+                Shop Now
+              </Link>
             </div>
           </div>
         </div>

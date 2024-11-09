@@ -1,12 +1,10 @@
-"use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 
 interface ImageProps {
+  id: number;
   src: string;
   alt: string;
-  id: number;
 }
 
 interface ProductColorProps {
@@ -23,18 +21,17 @@ function ProductColor({
   const [activeImage, setActiveImage] = useState<number | null>(
     activeImageProps ?? null
   );
-  const [imageList, setImageList] = useState<ImageProps[]>(imageListProps);
 
   const handleClick = (id: number) => {
     setActiveImage(id);
-    handleimageColorChangeCallback(id);
+    handleimageColorChangeCallback(id); // Pass variant id to ProductDetails
   };
 
   return (
     <section className="flex space-x-3">
-      {imageList.map((image) => (
+      {imageListProps.map((image, index) => (
         <div
-          key={image.id}
+          key={index}
           className={`relative h-[50px] w-[40px] border px-7 cursor-pointer ${
             activeImage === image.id ? "border-black" : "border-transparent"
           }`}

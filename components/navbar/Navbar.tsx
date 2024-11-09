@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiShoppingCart, FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import CartSidebar from "../cart-sidebar/CartSidebar";
@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { useCart } from "../context-provider/ContextProvider";
 
 function Navbar() {
-  const { openCartToggle, toggleCart } = useCart(); // Access context values
+  const { openCartToggle, toggleCart, cartItems } = useCart(); // Access context values
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Mobile menu toggle functions
@@ -18,6 +18,13 @@ function Navbar() {
   function closeMobileMenu() {
     setIsMobileMenuOpen(false);
   }
+
+  // Cart Item Count
+  const [cartCounter, setCartCounter] = useState(0);
+  // Cartitems number to show in the cart
+  useEffect(() => {
+    return setCartCounter(cartItems.length);
+  }, [cartItems, setCartCounter]);
 
   return (
     <>
@@ -73,11 +80,16 @@ function Navbar() {
 
             {/* Cart Icon Button */}
             <button
-              className="text-white hover:text-gray-400 transition-colors"
+              className="relative text-white text-2xl hover:text-gray-400 transition-colors"
               onClick={toggleCart} // Use toggleCart from context
               aria-label="Open Cart Sidebar"
             >
               <FiShoppingCart />
+              {cartCounter > 0 && (
+                <span className="absolute -top-2 left-4 bg-red-500 text-white text-xs rounded-full px-[4px] ">
+                  {cartCounter}
+                </span>
+              )}
             </button>
 
             {/* Profile Icon Button */}
@@ -203,7 +215,7 @@ function Navbar() {
             openCartToggle ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <CartSidebar onClose={toggleCart} />
+          <CartSidebar />
         </div>
       </div>
     </>

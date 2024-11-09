@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import {
   useContext,
   createContext,
@@ -16,6 +17,12 @@ interface StateContextType {
   addToCart: (cartData: any) => void;
   subtotal: number;
   totalValue: number;
+  discount: number;
+  setPromocode: (value: string) => void;
+
+  // Authentication
+  isAuthenticated: boolean;
+  promptSignIn: () => void;
 }
 
 const StateContext = createContext<StateContextType>({
@@ -27,6 +34,10 @@ const StateContext = createContext<StateContextType>({
   addToCart: () => {},
   subtotal: 0,
   totalValue: 0,
+  discount: 0,
+  isAuthenticated: false,
+  setPromocode: () => {},
+  promptSignIn: () => {},
 });
 
 export const StateProvider = ({ children }: { children: ReactNode }) => {
@@ -34,6 +45,16 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<any>([]);
   const [promocode, setPromocode] = useState("");
 
+  // Authentication
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const router = useRouter();
+
+  // Prompt sign-in (redirect to login page)
+  const promptSignIn = () => {
+    router.push("/login"); // Redirect to the login page if not authenticated
+  };
+
+  // Toggle Shopping cart
   const toggleCart = () => {
     setOpenCartToggle((prev) => !prev);
   };
@@ -67,9 +88,16 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
 
   const subtotal = calculateSubtotal();
 
+  // PromoCode
+
+  const promoCode = () => {
+    return promocode === "WELCOME20" ? subtotal * 0.2 : 0;
+  };
+
+  const discount = promoCode();
+
   // Calculate total with discount and tax
   const calculateTotal = () => {
-    const discount = promocode === "WELCOME20" ? subtotal * 0.2 : 0;
     const discountedSubtotal = subtotal - discount;
     const tax = discountedSubtotal * 0.3;
     return Math.round(discountedSubtotal + tax);
@@ -88,6 +116,10 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
         addToCart,
         subtotal,
         totalValue,
+        discount,
+        setPromocode,
+        isAuthenticated,
+        promptSignIn,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../product-card/ProductCard";
 import {
   Select,
@@ -58,6 +58,18 @@ function ProductList() {
   const [colorSelected, setColorSelected] = useState("");
   const [sortSelected, setSortSelected] = useState("");
   const [sizeSelected, setSizeSelected] = useState("");
+
+  // Fetching category from URl To check Category URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const newCategoryName = params.get("category_name");
+    const newLowestPrice = params.get("lowest_price");
+
+    if (newCategoryName) setCategorySelected(newCategoryName);
+    if (newLowestPrice) setSortSelected(newLowestPrice);
+
+    console.log("Updated Category", newLowestPrice);
+  }, []);
 
   // Filtering Logic
   function getFilterProduct() {

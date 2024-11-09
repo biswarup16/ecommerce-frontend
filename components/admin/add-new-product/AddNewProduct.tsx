@@ -7,7 +7,7 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { useDropzone } from "react-dropzone";
 function AddNewProduct() {
   const [images, setImages] = useState<File[]>([]);

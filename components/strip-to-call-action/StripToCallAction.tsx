@@ -1,6 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
-import Button from "../button/Button";
 
 function StripToCallAction({ className }: any) {
   return (
@@ -29,7 +29,13 @@ function StripToCallAction({ className }: any) {
           <p className="text-sm md:text-xl text-white tracking-wider mt-2 uppercase  transform scale-y-125">
             It's Now or never kinda deal
           </p>
-          <Button className="mt-4 lg:mt-10 !bg-white !text-black font-semibold" />
+          {/* <Button className="mt-4 lg:mt-10 !bg-white !text-black font-semibold" /> */}
+          <Link
+            href={`/products?lowest_price=Price: Low to High`}
+            className="bg-white py-4 px-10 mt-5 hover:bg-gray-300 font-semibold"
+          >
+            Shop Now
+          </Link>
         </div>
       </div>
     </main>

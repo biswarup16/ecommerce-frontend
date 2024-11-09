@@ -2,33 +2,20 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import ImageModal from "../image-modal/ImageModal";
 
-// Define a type for the image structure
-type ImageType = {
-  id: number;
-  src: string;
-  alt: string;
-};
-
-interface ImageProps {
-  src: string;
-  alt: string;
-  id: number;
-}
-
 interface ImageGalleryProps {
-  productImageListProps?: ImageProps[];
+  setVariantListProps?: any;
 }
 
-function ImageGallery({ productImageListProps = [] }: ImageGalleryProps) {
+function ImageGallery({ setVariantListProps = [] }: ImageGalleryProps) {
   const [toggleImageModal, setToggleImageModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
-  const [imageList, setImageList] = useState<ImageProps[]>();
+  const [selectedImage, setSelectedImage] = useState<any>();
+  const [imageList, setImageList] = useState<any>();
 
   useEffect(() => {
-    setImageList(productImageListProps);
-  }, [productImageListProps]);
+    setImageList(setVariantListProps);
+  }, [setVariantListProps]);
 
-  function openImageModal(image: ImageType) {
+  function openImageModal(image: string) {
     setSelectedImage(image);
     setToggleImageModal(true);
   }
@@ -41,7 +28,7 @@ function ImageGallery({ productImageListProps = [] }: ImageGalleryProps) {
   return (
     <>
       <section className="grid col-span-1 flex-1 gap-2 sm:grid sm:grid-cols-2 sm:gap-3 overflow-auto scrollbar-hide h-[400px] lg:h-[99vh] sm:h-[500px] cursor-pointer">
-        {imageList?.map((image, index) => (
+        {imageList?.map((image: any, index: any) => (
           <div key={index} className="relative w-full h-[450px] sm:h-[500px]">
             <Image
               src={image.src}

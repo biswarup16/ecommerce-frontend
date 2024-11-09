@@ -14,7 +14,7 @@ function Page() {
       <section id="herosection" className=" lg:mb-36">
         <Herosection />
       </section>
-      <section id="category" className="mx-6">
+      <section id="category" className=" grid place-content-center">
         <h1 className="text-xl md:text-3xl font-bold">Category</h1>
         <CategoryCard />
       </section>

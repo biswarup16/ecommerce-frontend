@@ -1,123 +1,241 @@
 "use client";
 import { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
-import Dashboard from "../dashboard/Dashboard";
-import Order from "../orders/Order";
-import Reviews from "../reviews/Reviews";
-import AddNewProduct from "@/components/admin/add-new-product/AddNewProduct";
+import Link from "next/link";
+import {
+  FaTh,
+  FaBox,
+  FaTags,
+  FaShoppingCart,
+  FaWarehouse,
+  FaCog,
+} from "react-icons/fa";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Sidebar = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [activeComponent, setActiveComponent] = useState("Dashboard");
-
-  const toggleModal = () => setShowModal(!showModal);
-
-  const renderContent = () => {
-    switch (activeComponent) {
-      case "Dashboard":
-        return <Dashboard />;
-      case "Orders":
-        return <Order />;
-      case "Reviews":
-        return <Reviews />;
-      case "New_Product":
-        return <AddNewProduct />;
-      default:
-        return <Dashboard />;
-    }
-  };
+  const [activeSection, setActiveSection] = useState("dashboard");
 
   return (
-    <div className="md:flex w-full lg:h-screen">
-      {/* Sidebar - Left Aligned */}
-      <div className="flex flex-col w-full md:w-1/3 lg:w-1/4 bg-black text-white ">
-        {/* Desktop Sidebar */}
-        <div className="hidden md:flex flex-col items-center p-4 h-full">
-          <h1 className="text-xl lg:text-2xl font-bold mb-6">Ecom Express</h1>
-          <div className="flex flex-col items-center mb-4">
-            <div className="rounded-full bg-gray-500 w-24 h-24"></div>
-            <h2 className="mt-2 font-semibold">Admin Name</h2>
-            <p className="text-gray-400">admin@example.com</p>
-          </div>
-          <hr className="border-gray-500 w-full my-4" />
-          <nav className="flex flex-col space-y-4 w-full">
-            <button
-              className={`py-2 px-4 w-full text-left ${
-                activeComponent === "Dashboard" ? "bg-gray-700 text-white" : ""
-              }`}
-              onClick={() => setActiveComponent("Dashboard")}
-            >
-              Dashboard
-            </button>
+    <div className="flex ">
+      {/* Sidebar */}
+      <div className="bg-black text-white w-full h-screen p-6">
+        <h1 className="text-2xl font-bold mb-4">Ecom Express</h1>
+        <hr className="border-gray-500 mb-6" />
 
-            <button
-              className="py-2 px-4 w-full text-left"
-              onClick={() => setActiveComponent("Orders")}
-            >
-              Orders
-            </button>
-            <button
-              className="py-2 px-4 w-full text-left"
-              onClick={() => setActiveComponent("Reviews")}
-            >
-              Reviews
-            </button>
-            <button
-              className="py-2 px-4 w-full text-left"
-              onClick={() => setActiveComponent("New_Product")}
-            >
-              Add New Product
-            </button>
-          </nav>
-          <button className="mt-auto py-2 px-4 w-full text-left">Logout</button>
-        </div>
+        {/* Dashboard Link */}
+        <Link href="/admin">
+          <button
+            onClick={() => setActiveSection("dashboard")}
+            className={`flex items-center gap-2 w-full p-2 mb-2 text-left hover:underline ${
+              activeSection === "dashboard"
+                ? "bg-gray-700 rounded-md hover:no-underline"
+                : ""
+            }`}
+          >
+            <FaTh className="text-lg" /> Dashboard
+          </button>
+        </Link>
 
-        {/* Mobile Navbar */}
-        <div className="md:hidden flex justify-between items-center w-full p-4">
-          <h1 className="text-sm font-bold">Ecom Express</h1>
-          <div className="text-xs flex items-center space-x-4">
-            <button
-              className={`py-2 px-4 w-full text-left ${
-                activeComponent === "Dashboard" ? "bg-gray-700 text-white" : ""
-              }`}
-              onClick={() => setActiveComponent("Dashboard")}
-            >
-              Dashboard
-            </button>
+        {/* Accordion */}
+        <Accordion type="single" collapsible className="pl-2">
+          {/* Products Accordion */}
+          <AccordionItem value="products">
+            <AccordionTrigger>
+              <div className="flex items-center space-x-2">
+                <FaBox className="text-lg" />
+                <span className="text-[16px]">Products</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Link href="/admin/product/List?name=product list">
+                <button
+                  onClick={() => setActiveSection("product List")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "product List"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  List
+                </button>
+              </Link>
+              <Link href="/admin/product/Create?name=product create">
+                <button
+                  onClick={() => setActiveSection("create Product")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "create Product"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Create
+                </button>
+              </Link>
+              <Link href="/admin/product/Edit?name=product edit">
+                <button
+                  onClick={() => setActiveSection("edit Product")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "edit Product"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Edit
+                </button>
+              </Link>
+              <Link href="/admin/product/Details?name=product details">
+                <button
+                  onClick={() => setActiveSection("product Details")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "product Details"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Details
+                </button>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
 
-            <button onClick={() => setActiveComponent("Orders")}>Orders</button>
-            <button onClick={() => setActiveComponent("Reviews")}>
-              Reviews
-            </button>
-            <button onClick={() => setActiveComponent("New_Product")}>
-              Add New Products
-            </button>
-            <FaUserCircle
-              onClick={toggleModal}
-              size={24}
-              className="cursor-pointer"
-            />
-          </div>
-        </div>
+          {/* Category Accordion */}
+          <AccordionItem value="category">
+            <AccordionTrigger className="flex items-center gap-2">
+              <div className="flex items-center space-x-2">
+                <FaTags className="text-lg" />
+                <span className="text-[16px]">Category</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Link href="/admin/category/List?name=category list">
+                <button
+                  onClick={() => setActiveSection("category List")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "category List"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  List
+                </button>
+              </Link>
+              <Link href="/admin/category/Create?name=category create">
+                <button
+                  onClick={() => setActiveSection("category Create")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "category Create"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Create
+                </button>
+              </Link>
+              <Link href="/admin/category/Edit?name=category edit">
+                <button
+                  onClick={() => setActiveSection("category Edit")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "category Edit"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Edit
+                </button>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
 
-        {/* Modal for Mobile Profile */}
-        {showModal && (
-          <div className="absolute top-0 right-0 w-2/3 bg-white text-black shadow-lg p-4 rounded-md z-10">
-            <div className="flex flex-col items-center">
-              <div className="rounded-full bg-gray-500 w-16 h-16 mb-2"></div>
-              <h2 className="font-semibold">Admin Name</h2>
-              <p className="text-gray-600">admin@example.com</p>
-              <button className="mt-4 text-red-500" onClick={toggleModal}>
-                Close
-              </button>
-              <button className="text-red-700">Logout</button>
-            </div>
-          </div>
-        )}
+          {/* Orders Accordion */}
+          <AccordionItem value="orders">
+            <AccordionTrigger className="flex items-center gap-2">
+              <div className="flex items-center space-x-2">
+                <FaShoppingCart className="text-lg" />
+                <span className="text-[16px]">Orders</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Link href="/admin/orders/List?name=order list">
+                <button
+                  onClick={() => setActiveSection("order List")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "order List"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  List
+                </button>
+              </Link>{" "}
+              <Link href="/admin/orders/Details?name=order details">
+                <button
+                  onClick={() => setActiveSection("order Details")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "order Details"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Details
+                </button>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Inventory Accordion */}
+          <AccordionItem value="inventory">
+            <AccordionTrigger className="flex items-center gap-2">
+              <div className="flex items-center space-x-2">
+                <FaWarehouse className="text-lg" />
+                <span className="text-[16px]">Inventory</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Link href="/admin/inventory/Inventory?name=warehouse inventory">
+                <button
+                  onClick={() => setActiveSection("warehouse Inventory")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "warehouse Inventory"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  Warehouse Inventory
+                </button>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Settings Accordion */}
+          <AccordionItem value="settings">
+            <AccordionTrigger className="flex items-center gap-2">
+              <div className="flex items-center space-x-2">
+                <FaCog className="text-lg" />
+                <span className="text-[16px]">Settings</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent>
+              <Link href="/admin/settings/Homepage?name=homepage details">
+                <button
+                  onClick={() => setActiveSection("homepage Details")}
+                  className={`block w-full p-2 hover:underline ${
+                    activeSection === "homepage Details"
+                      ? "bg-gray-700 rounded-md hover:no-underline"
+                      : ""
+                  }`}
+                >
+                  HomePage Details
+                </button>
+              </Link>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
-
-      {/* Main Content Area - Right Aligned */}
-      <div className="p-2 lg:p-6 w-full bg-gray-100">{renderContent()}</div>
     </div>
   );
 };

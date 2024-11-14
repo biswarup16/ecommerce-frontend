@@ -1,9 +1,9 @@
-import Sidebar from "@/components/admin/sidebar/SideBar";
+import Dashboard from "@/components/admin/dashboard/Dashboard";
 
 function AdminPage() {
   return (
-    <div className="h-screen  overflow-y-hidden">
-      <Sidebar />
+    <div className="overflow-y-hidden">
+      <Dashboard />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import CartProductItem from "../cart-product/CartProductItem";
 import { useCart } from "../context-provider/ContextProvider";
 function CheckoutPage() {
-  const { totalValue, isAuthenticated, promptSignIn } = useCart();
+  const { totalValue, isAuthenticated, promptSignIn, cartItems } = useCart();
   const router = useRouter();
   // Shipping cost
   function shipingCost() {
@@ -201,8 +201,14 @@ function CheckoutPage() {
         </h2>
 
         {/* Product Cart Items */}
-        <div className="max-h-[500px] overflow-y-auto scrollbar-hide -mt-4 ">
-          <CartProductItem />
+        <div className="h-[430px] overflow-y-auto scrollbar-hide -mt-4 ">
+          {cartItems && cartItems.length > 0 ? (
+            <CartProductItem />
+          ) : (
+            <div className="text-gray-200 text-6xl font-sans grid place-content-center h-full uppercase font-semibold">
+              Cart is Empty
+            </div>
+          )}
         </div>
 
         {/* Subtotal Section */}
@@ -212,6 +218,11 @@ function CheckoutPage() {
           <div className="flex justify-between text-sm text-gray-700 uppercase">
             <span>Subtotal</span>
             <span>₹{totalValue}</span>
+          </div>
+          {/* Total Item In Bag */}
+          <div className="flex justify-between text-sm text-gray-700 uppercase mt-2">
+            <span>Total Items</span>
+            <span>{cartItems.length}</span>
           </div>
           <div className="flex justify-between text-sm text-gray-700  mt-2">
             <div className="flex flex-col">

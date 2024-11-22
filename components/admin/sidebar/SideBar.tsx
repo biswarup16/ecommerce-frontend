@@ -171,18 +171,6 @@ const Sidebar = () => {
                 >
                   List
                 </button>
-              </Link>{" "}
-              <Link href="/admin/orders/Details?name=order details">
-                <button
-                  onClick={() => setActiveSection("order Details")}
-                  className={`block w-full p-2 hover:underline ${
-                    activeSection === "order Details"
-                      ? "bg-gray-700 rounded-md hover:no-underline"
-                      : ""
-                  }`}
-                >
-                  Details
-                </button>
               </Link>
             </AccordionContent>
           </AccordionItem>

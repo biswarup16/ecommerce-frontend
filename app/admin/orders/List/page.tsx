@@ -1,7 +1,12 @@
+import AdminOrderList from "@/components/admin/admin-orders/AdminOrderList";
 import React from "react";
 
 function page() {
-  return <div>Page for Order List</div>;
+  return (
+    <main className="">
+      <AdminOrderList />
+    </main>
+  );
 }
 
 export default page;

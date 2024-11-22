@@ -1,7 +1,12 @@
+import AdminCreateProduct from "@/components/admin/admin-products/AdminCreateProduct";
 import React from "react";
 
 function page() {
-  return <div>page for Create</div>;
+  return (
+    <>
+      <AdminCreateProduct />
+    </>
+  );
 }
 
 export default page;

@@ -5,8 +5,14 @@ import { useRouter } from "next/navigation";
 
 function CartSidebar() {
   const router = useRouter();
-  const { totalValue, subtotal, toggleCart, discount, setPromocode } =
-    useCart();
+  const {
+    totalValue,
+    subtotal,
+    toggleCart,
+    discount,
+    setPromocode,
+    cartItems,
+  } = useCart();
 
   return (
     <main className="h-full bg-white shadow-lg z-30">

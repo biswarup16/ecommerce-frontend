@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 interface Variant {
   variant_id: number;
@@ -102,20 +101,41 @@ const AdminCreateProduct: React.FC = () => {
     setToggleVariantSection(false);
   }
 
-  // function SubmitProductData(e: any) {
-  //   e.preventDefault();
-  //   console.log("Product Details: ", product);
-  // }
   const productApi = process.env.NEXT_PUBLIC_API_FOR_CREATE_PRODUCT || "";
-  console.log("URL: ", productApi);
 
   async function SubmitProductData(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    const formData = new FormData();
+
+    // Append product data
+    formData.append("product_name", product.product_name);
+    formData.append("product_description", product.product_description);
+    formData.append("product_category", product.product_category);
+    formData.append("product_sub_category", product.product_sub_category);
+
+    // Flatten and append all images
+    product.variants.forEach((variant) => {
+      variant.images.forEach((image) => {
+        formData.append("images", image); // Use flat structure
+      });
+    });
+
+    // Append variant data in JSON format
+    const variantsData = product.variants.map((variant) => ({
+      variant_id: variant.variant_id,
+      color: variant.color,
+      stock: variant.stock,
+      sizes: variant.sizes,
+      price: variant.price,
+      sale_price: variant.sale_price,
+    }));
+    formData.append("variants", JSON.stringify(variantsData));
+
     try {
       const response = await fetch(productApi, {
         method: "POST",
-        body: JSON.stringify(product),
+        body: formData,
       });
 
       if (!response.ok) {

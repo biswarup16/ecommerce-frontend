@@ -1,0 +1,84 @@
+Product_details(Form Admin):  {
+    product_id: number ,
+    product_name: string ,
+    product_description: string ,
+	product_category: string,
+	product_gender: string,
+    product_sub_category: string ,
+    variants: array[
+      {
+        variant_id: number,
+        product_id: number,
+        color: string,
+        images: string[],
+        stock: number,
+        sizes: string[],
+        price: number,
+        sale_price: number,
+      },
+      {
+      variant_id: number,
+        product_id: number,
+        color: string,
+        images: string[],
+        stock: number,
+        sizes: string[],
+        price: number,
+        sale_price: number,
+      },
+    ],
+  },
+
+
+// Customer Details: 
+customer_first_name: string,
+customer_last_name: string,
+customer_email: email,
+customer_phone_number: phone,
+customer_country: string,
+customer_state: string,
+customer_city: string,
+customer_street_landmark: string,
+customer_pincode: number.
+
+
+//User Profile Data Frontend
+user_first_name: string,
+user_last_name: string,
+email_address: email,
+user_phone: phone,
+user_location: string,
+order_history: array,
+
+
+//Signup Data
+username: string,
+email: email,
+password: password,
+confirm_password: password
+OR
+signup with google
+
+
+// Login Data
+email: email,
+password: pasword,
+
+// order details:
+order_id: number,
+created at: date,
+ 
+Customer_name: string,
+total_bill: number,
+payment_status: enum["Unpaid', "Paid"],
+product_id: number,
+varaint_id: number,
+no_of_items: number,
+delivery_number: number,
+order_status: enum["processing", "shipped", "delivered", "cancel"]
+
+
+
+
+
+

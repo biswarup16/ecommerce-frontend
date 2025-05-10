@@ -1,9 +1,12 @@
-import React from 'react'
+import ProductList from "@/components/product-list/ProductList";
+import React from "react";
 
 function page() {
   return (
-    <div>page</div>
-  )
+    <>
+      <ProductList />
+    </>
+  );
 }
 
-export default page
+export default page;

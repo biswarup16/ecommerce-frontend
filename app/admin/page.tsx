@@ -1,9 +1,11 @@
-import React from 'react'
+import Dashboard from "@/components/admin/dashboard/Dashboard";
 
 function AdminPage() {
   return (
-    <div>Admin Route</div>
-  )
+    <div className="overflow-y-hidden">
+      <Dashboard />
+    </div>
+  );
 }
 
-export default AdminPage
+export default AdminPage;

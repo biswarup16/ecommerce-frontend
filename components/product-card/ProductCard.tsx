@@ -1,0 +1,211 @@
+import Image from "next/image";
+import Link from "next/link"; // Import Link from Next.js
+import React, { useState } from "react";
+import { StarIcon } from "lucide-react";
+import { useCart } from "../context-provider/ContextProvider";
+
+interface VariantProps {
+  variant_id: number;
+  color: string;
+  images: string[];
+  stock: number;
+  sizes: string[];
+  price: number;
+  sale_price: number;
+}
+
+interface ProductProps {
+  product_id: number;
+  product_name: string;
+  product_description: string;
+  product_brand: string;
+  category: string;
+  sub_category: string;
+  variants: VariantProps[];
+}
+
+function ProductCard({
+  product,
+  className,
+}: {
+  product: ProductProps;
+  className?: string;
+}) {
+  const [selectedVariant, setSelectedVariant] = useState(product.variants[0]);
+  const [selectedSize, setSelectedSize] = useState<string>(
+    selectedVariant.sizes[0]
+  );
+  const [quantity, setQuantity] = useState(1);
+
+  // Handle color change
+  const handleColorChange = (color: string) => {
+    const variantColor = product.variants.find((v) => v.color === color);
+    if (variantColor) setSelectedVariant(variantColor);
+  };
+
+  // Handle Add to Cart function
+  const { addToCart, cartItems, setCartItems, toggleCart } = useCart();
+
+  const handleAddToCart = (product: any, index: number) => {
+    const productData = {
+      cartItem_id: index,
+      product_id: product.product_id,
+      product_name: product.product_name,
+      product_brand: product.product_brand,
+      product_category: product.category,
+      variant_id: selectedVariant.variant_id,
+      variant_price: selectedVariant.price,
+      variant_stock: selectedVariant.stock,
+      variant_color: selectedVariant.color,
+      variant_sizes: selectedVariant.sizes,
+      selectedSize: selectedSize,
+      variant_image: selectedVariant.images,
+      product_quantity: quantity,
+    };
+
+    // Check if the item is already in the cart
+    const existingItemIndex = cartItems.findIndex(
+      (item) =>
+        item.product_id === productData.product_id &&
+        item.variant_id === productData.variant_id &&
+        item.selectedSize === productData.selectedSize
+    );
+
+    if (existingItemIndex !== -1) {
+      // Item exists, update its quantity
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[existingItemIndex] = {
+        ...updatedCartItems[existingItemIndex],
+        product_quantity:
+          updatedCartItems[existingItemIndex].product_quantity +
+          productData.product_quantity,
+      };
+      setCartItems(updatedCartItems);
+      toggleCart();
+    } else {
+      // Item is new, add to cart with selected quantity
+      addToCart(productData);
+    }
+  };
+
+  // Generate a slug for the product
+  const slug = `${product.product_id}-${
+    selectedVariant.variant_id
+  }-${product.category.toLowerCase()}`;
+
+  return (
+    <div
+      className={`rounded max-h-[300px] w-auto md:max-h-[400px] lg:min-h-[450px] lg:w-auto border ${className}`}
+    >
+      <div className="relative mx-auto w-full h-[150px] md:h-[200px] md:w-[230px] lg:h-[200px] lg:w-auto rounded-md">
+        <Link
+          href={`/products/${slug}?product_id=${
+            product.product_id
+          }&variant_id=${
+            selectedVariant.variant_id
+          }&category=${product.category.toLowerCase()}`}
+          passHref
+        >
+          <Image
+            src={selectedVariant?.images[0]}
+            alt={product.product_name}
+            fill
+            className="rounded object-cover"
+          />
+        </Link>
+        <div className="absolute bottom-[3px] left-[5px] md:bottom-2 md:left-3 flex items-center bg-white bg-opacity-30 backdrop-blur-md px-1 md:px-4 md:py-1.5 lg:py-2 rounded-md border border-gray-200">
+          <span className="text-[6px] md:text-xs lg:text-[14px] font-medium text-gray-700">
+            4.5
+          </span>
+          <div className="h-2 md:h-4 border-l border-gray-300 mx-[1.5px] md:mx-2"></div>
+          <StarIcon className="w-2 h-2 md:w-4 md:h-4 text-gray-600 " />
+        </div>
+      </div>
+
+      <div className="p-3 flex flex-col md:justify-between h-[200px] lg:h-[250px] overflow-hidden gap-2 md:space-y-2">
+        <div className="flex flex-col items-start">
+          <span className="text-black/90 font-semibold text-sm md:text-lg lg:text-xl line-clamp-2">
+            {product.product_brand}
+          </span>
+          <div className="text-gray-600 text-[8px] md:text-xs lg:text-[13px] line-clamp-2 ">
+            {product.product_name.split(" ").slice(0, 4).join(" ") + " ..."}
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <span className="text-black font-semibold text-[12px] md:text-[16px] lg:text-md">
+            ₹{selectedVariant.price}
+          </span>
+          <span className="text-red-700 line-through text-[8px] sm:text-xs lg:text-[14px]">
+            ₹{selectedVariant.sale_price}
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between w-full">
+          {/* Size Selection */}
+          <div className="flex items-center space-x-1 text-xs lg:text-sm">
+            <span className="text-gray-900 font-semibold">Size:</span>
+            <select
+              className="w-18 h-6 md:w-20 md:h-8 lg:w-12 lg:h-7 border border-gray-300 rounded text-xs"
+              value={selectedSize}
+              onChange={(e) => setSelectedSize(e.target.value)}
+            >
+              {selectedVariant.sizes.map((size, index) => (
+                <option key={index} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Color Selection */}
+          <div className="flex space-x-1">
+            {product.variants?.map((variant: any, index: number) => (
+              <span
+                key={index}
+                className={`w-3 h-3 md:w-4 md:h-4 rounded-full border border-gray-300 cursor-pointer ${
+                  selectedVariant.color === variant.color ? "border-black" : ""
+                }`}
+                style={{ backgroundColor: variant.color.toLowerCase() }}
+                onClick={() => handleColorChange(variant.color)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Quantity Selection */}
+        <div className="flex items-center mt-2 space-x-1">
+          <span className="text-gray-900 font-semibold text-xs lg:text-sm">
+            Qty:
+          </span>
+          <select
+            className="w-12 h-6 md:w-14 md:h-8 border border-gray-300 rounded text-xs"
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+          >
+            {Array.from({ length: 10 }).map((_, i) => (
+              <option key={i} value={i + 1}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="w-full text-center mt-2">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddToCart(product, cartItems.length);
+            }}
+            type="button"
+            className="md:py-2 lg:py-3 lg:px-2 text-xs rounded p-[5px] text-white bg-black w-full"
+          >
+            Add To Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ProductCard;
